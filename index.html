@@ -4,41 +4,146 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MindSort</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #4f46e5);
+      color: white;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 30px;
+      background: rgba(0,0,0,0.3);
+    }
+
+    nav a {
+      margin-left: 15px;
+      color: white;
+      text-decoration: none;
+    }
+
+    .container {
+      padding: 40px;
+    }
+
+    textarea {
+      width: 80%;
+      height: 120px;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #6366f1;
+      color: white;
+      cursor: pointer;
+    }
+
+    .results {
+      margin-top: 30px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 12px;
+      width: 200px;
+    }
+
+    ul {
+      text-align: left;
+      padding-left: 18px;
+    }
+
+    .info {
+      padding: 40px;
+    }
+
+    @media (max-width: 700px) {
+      .results {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="container">
-  <h1>✨ Clear your mind in seconds</h1>
-  <p class="subtitle">Dump your thoughts and organize them simply.</p>
+<nav>
+  <h2>MindSort</h2>
+  <div>
+    <a href="#main">Home</a>
+    <a href="#how">How it works</a>
+  </div>
+</nav>
 
-  <textarea placeholder="Write your thoughts here..."></textarea>
+<section id="main" class="container">
+  <h1>Organize your thoughts</h1>
+
+  <textarea id="input" placeholder="Write each thought on a new line..."></textarea>
+  <br>
+  <button onclick="organize()">Organize thoughts</button>
 
   <div class="results">
-    <div class="box">
-      <h3>✅ Tasks</h3>
-      <ul>
-        <li>Finish homework</li>
-        <li>Clean room</li>
-      </ul>
+    <div class="card">
+      <h3>Tasks</h3>
+      <ul id="tasks"></ul>
     </div>
 
-    <div class="box">
-      <h3>💡 Ideas</h3>
-      <ul>
-        <li>Build a portfolio website</li>
-      </ul>
+    <div class="card">
+      <h3>Ideas</h3>
+      <ul id="ideas"></ul>
     </div>
 
-    <div class="box">
-      <h3>⏰ Reminders</h3>
-      <ul>
-        <li>Call mom at 6pm</li>
-      </ul>
+    <div class="card">
+      <h3>Reminders</h3>
+      <ul id="reminders"></ul>
     </div>
   </div>
-</div>
+</section>
+
+<section id="how" class="info">
+  <h2>How it works</h2>
+  <p>
+    Type your thoughts into the box. Each line is sorted into tasks, ideas, or reminders using simple keywords.
+  </p>
+</section>
+
+<script>
+function organize() {
+  let lines = document.getElementById("input").value.split("\n");
+
+  tasks.innerHTML = ideas.innerHTML = reminders.innerHTML = "";
+
+  lines.forEach(l => {
+    let t = l.toLowerCase().trim();
+    if (!t) return;
+
+    let list =
+      t.includes("pm") || t.includes("am") || t.includes("tomorrow")
+        ? reminders
+        : t.includes("idea") || t.includes("build") || t.includes("create")
+        ? ideas
+        : tasks;
+
+    list.innerHTML += "<li>" + l + "</li>";
+  });
+}
+</script>
 
 </body>
 </html>
